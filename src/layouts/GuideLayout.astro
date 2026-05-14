@@ -7,18 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-
-const { title, description, pubDate, updatedDate, heroImage, category } = Astro.props;
-
-const categoryColors: Record<string, string> = {
-	review: 'bg-blue-50 text-blue-700',
-	comparison: 'bg-purple-50 text-purple-700',
-	listicle: 'bg-green-50 text-green-700',
-	tutorial: 'bg-amber-50 text-amber-700',
-	guide: 'bg-rose-50 text-rose-700',
-};
-
-const colorClass = category ? categoryColors[category] || 'bg-gray-50 text-gray-700' : '';
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
 <html lang="en">
@@ -31,23 +20,15 @@ const colorClass = category ? categoryColors[category] || 'bg-gray-50 text-gray-
 			<article>
 				{heroImage && (
 					<div class="mb-8">
-						<Image
-							width={720}
-							height={360}
-							src={heroImage}
-							alt=""
-							class="w-full rounded-xl shadow-sm"
-						/>
+						<Image width={720} height={360} src={heroImage} alt="" class="w-full rounded-xl shadow-sm" />
 					</div>
 				)}
 
-				<header class="mb-10">
+				<header class="mb-8">
 					<div class="flex items-center gap-3 mb-4">
-						{category && (
-							<span class={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide ${colorClass}`}>
-								{category}
-							</span>
-						)}
+						<span class="text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide bg-rose-100 text-rose-700">
+							📖 Guide
+						</span>
 						<span class="text-sm text-gray-400">
 							<FormattedDate date={pubDate} />
 						</span>
@@ -57,21 +38,35 @@ const colorClass = category ? categoryColors[category] || 'bg-gray-50 text-gray-
 							</span>
 						)}
 					</div>
-					<h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-4">
-						{title}
-					</h1>
+					<h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-3">{title}</h1>
 					<p class="text-lg text-gray-500">{description}</p>
 				</header>
+
+				<!-- Guide-specific: estimated read time + what you'll learn -->
+				<div class="bg-neutral-50 border border-gray-200 rounded-xl p-5 mb-10">
+					<p class="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-3">What you'll learn</p>
+					<p class="text-sm text-gray-600 leading-relaxed">
+						This guide walks you through the complete process step by step.
+						No prior experience required.
+					</p>
+					<div class="flex items-center gap-4 mt-4 pt-4 border-t border-gray-200">
+						<div class="flex items-center gap-1.5 text-xs text-gray-500">
+							<span>📖</span> Step-by-step guide
+						</div>
+						<div class="flex items-center gap-1.5 text-xs text-gray-500">
+							<span>⏱</span> 10-15 min read
+						</div>
+					</div>
+				</div>
 
 				<div class="prose">
 					<slot />
 				</div>
 			</article>
 
-			<!-- Back to reviews -->
 			<div class="mt-12 pt-8 border-t border-gray-200">
 				<a href="/blog" class="text-indigo-600 font-medium hover:text-indigo-800 no-underline">
-					&larr; Back to all reviews
+					← Back to all reviews
 				</a>
 			</div>
 		</main>

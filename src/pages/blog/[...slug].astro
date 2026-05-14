@@ -1,6 +1,9 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import ReviewLayout from '../../layouts/ReviewLayout.astro';
+import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import ListicleLayout from '../../layouts/ListicleLayout.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -13,8 +16,18 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+const layouts = {
+	review: ReviewLayout,
+	comparison: ComparisonLayout,
+	guide: GuideLayout,
+	tutorial: GuideLayout,
+	listicle: ListicleLayout,
+};
+
+const Layout = layouts[post.data.category || 'review'] || ReviewLayout;
 ---
 
-<BlogPost {...post.data}>
+<Layout {...post.data}>
 	<Content />
-</BlogPost>
+</Layout>
