@@ -1,0 +1,23 @@
+---
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} SaaSScout. All rights reserved.
+	<p class="disclaimer">
+		Some links on this site are affiliate links. We may earn a commission
+		at no extra cost to you.
+	</p>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.disclaimer {
+		font-size: 0.8em;
+		margin-top: 0.5em;
+	}
+</style>

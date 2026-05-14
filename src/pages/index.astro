@@ -1,0 +1,103 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<h1>Find the right tool.<br />Skip the noise.</h1>
+				<p>
+					Honest reviews and comparisons of AI and SaaS tools
+					for freelancers, creators, and small businesses.
+					No sponsored rankings. No fluff. Just what works.
+				</p>
+			</section>
+
+			<section class="latest-posts">
+				<h2>Latest Reviews</h2>
+				<ul>
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								<h3>{post.data.title}</h3>
+								<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+								<p class="description">{post.data.description}</p>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.hero {
+		text-align: center;
+		padding: 2em 0 3em;
+	}
+	.hero h1 {
+		font-size: 2.5em;
+		line-height: 1.2;
+		margin-bottom: 0.5em;
+	}
+	.hero p {
+		font-size: 1.1em;
+		color: rgb(var(--gray));
+		max-width: 540px;
+		margin: 0 auto;
+	}
+	.latest-posts h2 {
+		font-size: 1.5em;
+		margin-bottom: 1em;
+	}
+	.latest-posts ul {
+		list-style: none;
+		padding: 0;
+	}
+	.latest-posts li {
+		margin-bottom: 1.5em;
+	}
+	.latest-posts a {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+		padding: 1.2em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		transition: box-shadow 0.2s;
+	}
+	.latest-posts a:hover {
+		box-shadow: var(--box-shadow);
+	}
+	.latest-posts h3 {
+		margin: 0 0 0.3em;
+		font-size: 1.2em;
+	}
+	.latest-posts .date {
+		font-size: 0.85em;
+		color: rgb(var(--gray));
+		margin-bottom: 0.3em;
+	}
+	.latest-posts .description {
+		font-size: 0.95em;
+		color: rgb(var(--gray-dark));
+		margin: 0;
+	}
+</style>
