@@ -1,0 +1,154 @@
+---
+interface Props {
+	variant?: 'inline' | 'banner' | 'minimal';
+	heading?: string;
+	description?: string;
+}
+
+const {
+	variant = 'banner',
+	heading = 'Get the best tools in your inbox',
+	description = 'One email per week. New reviews, tool deals, and actionable tips. No spam. Unsubscribe anytime.',
+} = Astro.props;
+
+// ============================================================
+// TO CONNECT BEEHIIV:
+// 1. Go to Beehiiv → Settings → Publication → Publication ID
+// 2. Replace BEEHIIV_PUBLICATION_ID below with your actual ID
+// 3. The form will start working immediately
+// ============================================================
+const BEEHIIV_PUBLICATION_ID = 'BEEHIIV_PUBLICATION_ID';
+const formAction = `https://api.beehiiv.com/v2/publications/${BEEHIIV_PUBLICATION_ID}/subscriptions`;
+const isConfigured = BEEHIIV_PUBLICATION_ID !== 'BEEHIIV_PUBLICATION_ID';
+---
+
+{variant === 'banner' && (
+	<div class="bg-gray-50 border border-gray-200 rounded-2xl p-8 sm:p-12 text-center">
+		<h2 class="text-2xl font-bold mb-3">{heading}</h2>
+		<p class="text-gray-500 text-sm mb-6 max-w-md mx-auto">{description}</p>
+		<form
+			action={isConfigured ? formAction : '#'}
+			method="POST"
+			class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto newsletter-form"
+			data-configured={isConfigured.toString()}
+		>
+			<input
+				type="email"
+				name="email"
+				placeholder="you@example.com"
+				required
+				class="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+			/>
+			<button
+				type="submit"
+				class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-colors cursor-pointer"
+			>
+				Subscribe
+			</button>
+		</form>
+		<p class="text-xs text-gray-400 mt-3">Free forever. Unsubscribe anytime.</p>
+	</div>
+)}
+
+{variant === 'inline' && (
+	<div class="not-prose my-10 bg-indigo-50 border border-indigo-200 rounded-xl p-6">
+		<h3 class="text-lg font-bold text-gray-900 mb-1 m-0">{heading}</h3>
+		<p class="text-sm text-gray-600 mb-4 m-0">{description}</p>
+		<form
+			action={isConfigured ? formAction : '#'}
+			method="POST"
+			class="flex flex-col sm:flex-row gap-2 newsletter-form"
+			data-configured={isConfigured.toString()}
+		>
+			<input
+				type="email"
+				name="email"
+				placeholder="you@example.com"
+				required
+				class="flex-1 px-4 py-2.5 border border-indigo-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+			/>
+			<button
+				type="submit"
+				class="px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg text-sm hover:bg-indigo-700 transition-colors cursor-pointer"
+			>
+				Subscribe
+			</button>
+		</form>
+	</div>
+)}
+
+{variant === 'minimal' && (
+	<div class="not-prose my-6 flex flex-col sm:flex-row gap-2 items-start sm:items-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+		<p class="text-sm text-gray-600 m-0 shrink-0">{heading}</p>
+		<form
+			action={isConfigured ? formAction : '#'}
+			method="POST"
+			class="flex gap-2 w-full sm:w-auto newsletter-form"
+			data-configured={isConfigured.toString()}
+		>
+			<input
+				type="email"
+				name="email"
+				placeholder="you@example.com"
+				required
+				class="flex-1 sm:w-56 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+			/>
+			<button
+				type="submit"
+				class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md text-sm hover:bg-indigo-700 transition-colors cursor-pointer"
+			>
+				Go
+			</button>
+		</form>
+	</div>
+)}
+
+<script>
+document.querySelectorAll('.newsletter-form').forEach(form => {
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		const f = e.target as HTMLFormElement;
+		const configured = f.dataset.configured === 'true';
+		const email = (f.querySelector('input[name="email"]') as HTMLInputElement).value;
+		const btn = f.querySelector('button') as HTMLButtonElement;
+		const originalText = btn.textContent;
+
+		if (!configured) {
+			btn.textContent = 'Coming soon!';
+			btn.classList.replace('bg-indigo-600', 'bg-amber-500');
+			setTimeout(() => {
+				btn.textContent = originalText;
+				btn.classList.replace('bg-amber-500', 'bg-indigo-600');
+			}, 2000);
+			return;
+		}
+
+		btn.textContent = 'Sending...';
+		btn.disabled = true;
+
+		try {
+			const res = await fetch(f.action, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email, reactivate_existing: true }),
+			});
+
+			if (res.ok) {
+				btn.textContent = 'Subscribed!';
+				btn.classList.replace('bg-indigo-600', 'bg-green-600');
+				(f.querySelector('input') as HTMLInputElement).value = '';
+			} else {
+				throw new Error('Failed');
+			}
+		} catch {
+			btn.textContent = 'Try again';
+			btn.classList.replace('bg-indigo-600', 'bg-red-500');
+			setTimeout(() => {
+				btn.textContent = originalText;
+				btn.classList.replace('bg-red-500', 'bg-indigo-600');
+				btn.disabled = false;
+			}, 2000);
+		}
+	});
+});
+</script>

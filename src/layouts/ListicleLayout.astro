@@ -5,6 +5,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import Comments from '../components/Comments.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
@@ -56,7 +58,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				</div>
 			</article>
 
-			<div class="mt-12 pt-8 border-t border-gray-200">
+			<Comments />
+
+			<div class="mt-10">
+				<NewsletterForm variant="inline" heading="Want more lists like this?" description="One curated email per week with the best tools for your stack." />
+			</div>
+
+			<div class="mt-8 pt-8 border-t border-gray-200">
 				<a href="/blog" class="text-indigo-600 font-medium hover:text-indigo-800 no-underline">
 					← Back to all reviews
 				</a>
