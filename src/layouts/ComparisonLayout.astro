@@ -9,7 +9,7 @@ import NewsletterForm from '../components/NewsletterForm.astro';
 import Comments from '../components/Comments.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, toolsCompared } = Astro.props;
 ---
 
 <html lang="en">
@@ -47,7 +47,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<!-- Comparison-specific: VS banner -->
 				<div class="bg-purple-50 border border-purple-200 rounded-xl p-6 mb-10 text-center">
 					<p class="text-sm text-purple-600 uppercase tracking-widest font-semibold mb-2">Head to Head</p>
-					<p class="text-2xl font-bold text-gray-800">Which one wins?</p>
+					{toolsCompared && toolsCompared.length >= 2 ? (
+						<p class="text-2xl font-bold text-gray-800">
+							{toolsCompared[0]} <span class="text-purple-400 mx-2">vs</span> {toolsCompared[1]}
+						</p>
+					) : (
+						<p class="text-2xl font-bold text-gray-800">Which one wins?</p>
+					)}
 					<p class="text-sm text-gray-500 mt-2">Side-by-side analysis based on real testing, not feature pages.</p>
 				</div>
 

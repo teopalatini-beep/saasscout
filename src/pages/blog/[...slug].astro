@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import ReviewLayout from '../../layouts/ReviewLayout.astro';
 import ComparisonLayout from '../../layouts/ComparisonLayout.astro';
 import GuideLayout from '../../layouts/GuideLayout.astro';
+import TutorialLayout from '../../layouts/TutorialLayout.astro';
 import ListicleLayout from '../../layouts/ListicleLayout.astro';
 
 export async function getStaticPaths() {
@@ -21,7 +22,7 @@ const layouts = {
 	review: ReviewLayout,
 	comparison: ComparisonLayout,
 	guide: GuideLayout,
-	tutorial: GuideLayout,
+	tutorial: TutorialLayout,
 	listicle: ListicleLayout,
 };
 

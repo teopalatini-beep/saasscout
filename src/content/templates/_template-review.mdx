@@ -1,0 +1,101 @@
+---
+# REVIEW TEMPLATE — copy this file to src/content/blog/ and rename it
+# Example: src/content/blog/jasper-ai-review.mdx
+
+title: "[Tool Name] Review [Year]: [Hook — does it deliver?]"
+description: "We tested [Tool] for [X days/weeks] to see if [main promise]. Here is what works, what does not, and whether it is worth $[price]/month."
+pubDate: '2026-01-01'
+# updatedDate: '2026-01-01'
+category: 'review'
+tags: ['tag1', 'tag2', 'tag3']
+rating: 8           # 1–10
+verdict: 'recommended'  # 'recommended' | 'conditional' | 'not-recommended'
+affiliateUrl: 'https://example.com/affiliate'
+# heroImage: ../../assets/images/tool-hero.png
+# toolLogo: ../../assets/images/tool-logo.png
+---
+
+## TL;DR
+
+**Rating: [X]/10** — [One sentence summary of who it's for and main value prop.]
+
+**Who it's for:** [Specific audience — be precise, not generic.]
+
+**Who should skip it:** [Specific audience who won't get ROI from this tool.]
+
+---
+
+## What is [Tool Name]
+
+[2–3 sentences explaining what the tool does and what problem it solves. No fluff.]
+
+---
+
+## Pricing
+
+| Plan | Price/month | [Key limit] | [Key feature] |
+|------|------------|-------------|---------------|
+| Free / Starter | $0 | — | — |
+| Pro | $XX | — | — |
+| Business | $XX | — | — |
+
+[Free trial / money-back guarantee details.]
+
+**The plan most people should pick:** [Specific recommendation with reasoning.]
+
+---
+
+## What I Liked
+
+**[Feature 1 — bold label].** [2–3 sentences with specific detail. What happened when you used it. Include a data point or example if possible.]
+
+**[Feature 2 — bold label].** [2–3 sentences with specific detail.]
+
+**[Feature 3 — bold label].** [2–3 sentences with specific detail.]
+
+---
+
+## What I Didn't Like
+
+**[Limitation 1 — bold label].** [2–3 sentences. Be direct. Don't soften weaknesses.]
+
+**[Limitation 2 — bold label].** [2–3 sentences.]
+
+**[Limitation 3 — bold label].** [2–3 sentences.]
+
+---
+
+## Who Should Use [Tool Name]
+
+[List 3–4 specific use cases. One sentence each. Start with the clearest fit.]
+
+- [Use case 1]
+- [Use case 2]
+- [Use case 3]
+
+---
+
+## Who Should Skip It
+
+[List 3–4 reasons to avoid. Be honest. One sentence each.]
+
+- [Reason 1]
+- [Reason 2]
+- [Reason 3]
+
+---
+
+## Final Verdict
+
+[2–3 sentences. Restate the rating and verdict. End with a clear action — try it or skip it and why.]
+
+[Try [Tool Name] — [free trial / money-back guarantee]]({affiliateUrl})
+
+import ExternalResources from '../../components/ExternalResources.astro';
+
+<ExternalResources resources={[
+  { title: "[Tool] on G2 — verified user reviews", url: "https://www.g2.com/products/TOOL/reviews", source: "G2.com", type: "review" },
+  { title: "[Tool] official pricing", url: "https://example.com/pricing", source: "example.com", type: "official" },
+  { title: "How to use [Tool] — video walkthrough", url: "https://www.youtube.com/results?search_query=TOOL+tutorial+2026", source: "YouTube", type: "tutorial" },
+  { title: "r/[subreddit] — [Tool] user experiences", url: "https://www.reddit.com/r/SUBREDDIT/search/?q=TOOL", source: "Reddit", type: "community" },
+]} />

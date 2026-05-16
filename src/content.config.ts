@@ -16,6 +16,9 @@ const blog = defineCollection({
 			tags: z.array(z.string()).default([]),
 			rating: z.number().min(1).max(10).optional(),
 			verdict: z.enum(['recommended', 'conditional', 'not-recommended']).optional(),
+			affiliateUrl: z.string().url().optional(),
+			readTime: z.number().int().positive().optional(),
+			toolsCompared: z.array(z.string()).optional(),
 		}),
 });
 
