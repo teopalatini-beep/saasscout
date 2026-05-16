@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  const links: Record<string, string> = {
+    'systeme': 'https://systeme.io/?sa=AFFILIATE_ID',
+    'jasper': 'https://www.jasper.ai/?fpr=AFFILIATE_ID',
+    'surfer': 'https://surferseo.com/?fpr=AFFILIATE_ID',
+    'moosend': 'https://moosend.com/?ref=AFFILIATE_ID',
+    'tubebuddy': 'https://www.tubebuddy.com/pricing?a=AFFILIATE_ID',
+    'beehiiv': 'https://www.beehiiv.com/?via=AFFILIATE_ID',
+    'elevenlabs': 'https://elevenlabs.io/?from=AFFILIATE_ID',
+    'murf': 'https://murf.ai/?ref=AFFILIATE_ID',
+    'writesonic': 'https://writesonic.com/?ref=AFFILIATE_ID',
+    'shopify': 'https://www.shopify.com/?ref=AFFILIATE_ID',
+    'autods': 'https://www.autods.com/?ref=AFFILIATE_ID',
+    'spocket': 'https://www.spocket.co/?ref=AFFILIATE_ID',
+  };
+
+  return Object.entries(links).map(([tool, url]) => ({
+    params: { tool },
+    props: { url },
+  }));
+};
+
+const { url } = Astro.props;
+return Astro.redirect(url, 301);
+---
